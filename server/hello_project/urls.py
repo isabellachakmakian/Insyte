@@ -5,7 +5,7 @@ from django.urls import path
 def hello(request):
     return HttpResponse("Hello World")
 
-
+# http://127.0.0.1:8000/api/hello this shows the "hello world" on browser
 urlpatterns = [
-    path("", hello),
+    path("api/hello", hello),
 ]
