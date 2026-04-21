@@ -1,8 +1,102 @@
-.reportPage{
-  margin: 10% 20%;
-  display: block;
-  animation: fade-in 3s;
+.reportPage {
+  max-width: 1245px;
+  margin: 0 auto;
+  padding: 100px 80px;
+  animation: fade-in 0.6s ease;
 }
+
+.reportPage h2 {
+  margin-bottom: 40px; /* adjust to taste */
+}
+
+/* MAIN ROW */
+.appBasics {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* LEFT COLUMN — logo + text */
+.leftColumn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* LOGO */
+.logo {
+  width: 110px;
+  height: 110px;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+}
+
+/* TEXT */
+.appName {
+  font-size: 46px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.1;
+}
+
+.company {
+  font-size: 22px;
+  font-weight: 300;
+  color: #000;
+  opacity: 0.8;
+}
+
+/* RIGHT COLUMN — ratings */
+.ratingsColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ratingGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.ratingsText {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+  opacity: 0.7;
+}
+
+.ratingAverage {
+  font-size: 38px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1;
+}
+
+/* STARS */
+.starRating {
+  display: flex;
+  gap: 6px;
+}
+
+.star {
+  width: 22px;
+  height: 22px;
+  background-color: #1e1e1e;
+  border-radius: 6px;
+}
+
 
 /* CSS rule that controls the steps in an animation sequence */
 @keyframes fade-in {
