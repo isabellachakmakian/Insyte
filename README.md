@@ -36,3 +36,35 @@ Before you can run the app, if you haven't already, you need to download Node.js
 
 
 ### Backend
+#### Prerequisites: Installing Python and pip
+
+Before you can run the app make sure you have installed the following: Python 3.x and pip
+
+1. You can check by running
+   ```
+   python3 --version
+   pip3 --version
+   ```
+#### Running the application
+   1. Navigate to the server folder from the root directory by running this command in the terminal
+      ```
+      cd server
+      ```
+   2. Create and activate environment
+      ```
+     python3 -m venve env
+     source env/bin/activate # Mac/Linus
+     ```
+   3. Install dependencies
+      ```
+     pip3 install -r requirements.txt
+     ```
+   4. Run database setup
+      ```
+     python3 manage.py makemigrations
+     python3 manage.py migrate
+     ```
+   5. Start server
+      ```
+     python3 manage.py runserver
+      ```
