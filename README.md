@@ -45,26 +45,51 @@ Before you can run the app make sure you have installed the following: Python 3.
    python3 --version
    pip3 --version
    ```
-#### Running the application
+#### Running the application for the first time 
    1. Navigate to the server folder from the root directory by running this command in the terminal
       ```
       cd server
       ```
    2. Create and activate environment
       ```
-     python3 -m venve env
-     source env/bin/activate # Mac/Linus
-     ```
+      python3 -m venve env
+      source env/bin/activate # Mac/Linus
+      ```
    3. Install dependencies
       ```
-     pip3 install -r requirements.txt
-     ```
+      pip3 install -r requirements.txt
+      ```
    4. Run database setup
       ```
-     python3 manage.py makemigrations
-     python3 manage.py migrate
-     ```
-   5. Start server
+      python3 manage.py migrate
       ```
-     python3 manage.py runserver
+   5. Start server
+      ```  
+      python3 manage.py runserver
+      ```
+
+#### Daily Development
+##### If you're working on the backend this is what you will run everytime you come back to work
+ 1. Navigate to the server folder from the root directory by running this command in the terminal
+      ```
+      cd server
+      ```
+2. Activate environment
+      ```
+      source env/bin/activate # Mac/Linus
+      ```
+3. Get changes from main. 
+      ```
+      git pull 
+      ```
+4. Install dependencies and Run Database setup.
+   Note: Running these each time is a safety net in case things have changed and you weren't aware. 
+      ```
+      pip install -r requirements.txt
+      python3 manage.py migrate 
+      ```
+
+6. Start server
+      ```  
+      python3 manage.py runserver
       ```
