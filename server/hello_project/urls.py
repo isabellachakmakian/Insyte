@@ -1,11 +1,5 @@
-from django.http import HttpResponse
-from django.urls import path
-
-
-def hello(request):
-    return HttpResponse("Hello World")
-
-# http://127.0.0.1:8000/api/hello this shows the "hello world" on browser
+from django.urls import path, include
+# when request comes in, goes to feedback app's urls.py for the rest of the rules and handles search part
 urlpatterns = [
-    path("api/hello", hello),
+    path("api/", include("feedback.urls")),
 ]
