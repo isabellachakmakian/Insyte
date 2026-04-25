@@ -5,20 +5,20 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup'; 
 import styles from './SearchPage.module.css'; 
 import { CiSearch } from "react-icons/ci";
+import SearchResultForm from './SearchResultForm.jsx';
+import getApps  from '../../api/searchApps.js';
+export default function SearchBar({onSearchSuccess}){
 
+    const [appName, setAppName] = useState(""); 
 
-export default function SearchBar(){
-
-    const [query, setQuery] = useState(""); 
-    const navigate = useNavigate(); 
-
-    // Navigate to Report page using Navigate
-    const handleSearch = () => {
-        const cleanQuery = query.trim();
+    const handleSearch = async() => {
+        const cleanQuery = appName.trim();
+        
         if (cleanQuery) {
-            navigate(`/report?q=${encodeURIComponent(cleanQuery)}`); 
+            const results = await getApps(cleanQuery)
+            onSearchSuccess(results);
         }
-    };
+    }
 
     // If Enter button is pressed call handleSearch (Navigate to Report Page)
     const handleKeyDown = (e) => {
@@ -27,19 +27,18 @@ export default function SearchBar(){
         }
     };
 
-    return(
+    return (        
         <div className = {styles.searchGroup}>
             <InputGroup className={styles.customSearchBar}>
-                
                 <Form.Control
-                
                 className= {styles.customInput}
                 placeholder="Search Applications"
                 aria-label="Search Applications"
                 aria-describedby="basic-addon2" 
-                value={query}
-                onChange={(e) => setQuery(e.target.value)} 
-                onKeyDown={handleKeyDown}            
+                value={appName}
+                onChange={(e) => setAppName(e.target.value)} 
+                onKeyDown={handleKeyDown}    
+                      
                 />
                 
                 <Button 
@@ -50,7 +49,6 @@ export default function SearchBar(){
                     <CiSearch />
                 </Button>    
             </InputGroup>
-        </div>
-        
+        </div>    
     )
 }
