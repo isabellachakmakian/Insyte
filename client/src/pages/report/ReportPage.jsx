@@ -83,4 +83,10 @@ export default function ReportPage(){
 
         </div>
     )
+    /*(
+        <div className={styles.reportPage}>
+            <h2>Application Details/[Application Name]</h2>
+            <AppBasics />
+        </div>
+    )*/
 }
