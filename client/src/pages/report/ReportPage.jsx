@@ -58,35 +58,13 @@ export default function ReportPage(){
     if (loading) return <div>Loading...</div>;
     if (!reviews) return <div>Application not found.</div>;
      
-
+    // Destructure the appData for easier access to the properties 
     const {appName, trackId, developerName, iconUrl, genre, averageRating, ratingCount} = appData;
-    const {id, title, content, rating, author, date, version } = reviews[0];
+
 
     return (
         <div className={styles.reportPage}>
-            <h1>Report</h1>
-            <h2>Name: {appName}</h2>
-            <h6>Developer: {developerName}</h6>
-            <img src={iconUrl} alt={appName} />
-            <h6>genre: {genre}</h6>
-            <h6>averageRating: {averageRating}</h6>
-            <h6>ratingCount: {ratingCount}</h6>
-            
-            <br></br>
-            <p>Id: {id}</p>
-            <p>Title: {title}</p>
-            <p>Content: {content}</p>
-            <p>Rating: {rating}</p>
-            <p>Author: {author}</p>
-            <p>Date: {date}</p>
-            <p>{version}</p>
-
+            <h2>Application Details/[Application Name]</h2>
         </div>
     )
-    /*(
-        <div className={styles.reportPage}>
-            <h2>Application Details/[Application Name]</h2>
-            <AppBasics />
-        </div>
-    )*/
 }

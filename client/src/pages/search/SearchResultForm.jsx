@@ -48,7 +48,7 @@ export default function SearchResultForm({searchResults}) {
                                     <button 
                                         className={styles.plusButton}
                                         onClick={(e) => {
-                                            e.stopPropagation(); // Prevents clicking the plus from opening the report
+                                            e.stopPropagation(); 
                                             console.log("Save triggered");
                                         }}
                                     >
