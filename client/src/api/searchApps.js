@@ -9,7 +9,7 @@ async function getApps(name){
         if(response.ok){
             const jsonResponse = await response.json();
             const apps = jsonResponse.apps
-            console.log(apps)
+            
             return apps;
         }
         
@@ -18,5 +18,24 @@ async function getApps(name){
     }
 }
 
+async function getAppDetails(id){
+    const appDetailsEndpoint = '/api/reviews/';
+    const urlToFetch =  `${baseURL}${appDetailsEndpoint}?trackId=${id}`;
 
-export default getApps;
+    try{
+        const response = await fetch(urlToFetch);
+        if(response.ok){
+            const jsonResponse = await response.json();
+            const appDetails = jsonResponse.reviews;
+            return appDetails;
+        }
+
+    }catch(error){
+        console.log(error)
+    }
+
+
+}
+
+
+export { getApps, getAppDetails };

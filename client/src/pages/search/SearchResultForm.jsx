@@ -12,22 +12,21 @@ export default function SearchResultForm({searchResults}) {
     const navigate = useNavigate();
 
 
-    const handleUserSelection= () => {
-        const cleanQuery = query.trim();
-        if (cleanQuery) {
-            navigate(`/report?q=${cleanQuery}`); 
-        }
+    const handleUserSelection= (app) => {
+        const name = app.appName;
+        // Navigate to Report Page with appId and appName as params and pass the entire app data as state
+        navigate(`/report/${app.trackId}/${encodeURIComponent(name)}`, {state: {appData: app}}); 
     };
 
     return (
         <div className={styles.searchResults}>
-            <container>
+            
             <Row xs={1} className="g-3"> 
                 {searchResults.map((app) => (
                     <Col key={app.trackId}>
                         <Card 
                             className={`${styles.listCard} shadow-sm`} 
-                            onClick={() => handleUserSelection(app.trackId)}
+                            onClick={() => handleUserSelection(app)}
                             border="secondary"
                         >
                             <Card.Body className={styles.cardGroup}>
@@ -62,7 +61,7 @@ export default function SearchResultForm({searchResults}) {
                     </Col>
                 ))}
             </Row>
-            </container>
+            
         </div>  
     ) 
 }

@@ -6,7 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import styles from './SearchPage.module.css'; 
 import { CiSearch } from "react-icons/ci";
 import SearchResultForm from './SearchResultForm.jsx';
-import getApps  from '../../api/searchApps.js';
+import {getApps}  from '../../api/searchApps.js';
 export default function SearchBar({onSearchSuccess}){
 
     const [appName, setAppName] = useState(""); 
@@ -15,8 +15,13 @@ export default function SearchBar({onSearchSuccess}){
         const cleanQuery = appName.trim();
         
         if (cleanQuery) {
-            const results = await getApps(cleanQuery)
-            onSearchSuccess(results);
+            try{
+                const results = await getApps(cleanQuery);
+                onSearchSuccess(results);
+            }catch(error){
+                console.log(error);
+            }
+            
         }
     }
 

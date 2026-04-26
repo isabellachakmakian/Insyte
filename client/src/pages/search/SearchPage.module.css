@@ -1,7 +1,7 @@
 .searchPage{
-    margin:10% 20%; 
-    display:block;
-    animation: fade-in 3s;
+  margin: 10% 20%; 
+  display: block;
+  animation: fade-in 3s;
 }
 
 /* CSS rule that controls the steps in an animation sequence */
@@ -17,23 +17,23 @@
 /* Styling text div above search bar */
 .aboutContent{
   padding-bottom:1rem;
- 
 }
 
 /* Styling div containing search bar */
 .searchGroup {
- max-width: 100%;
+  max-width: 100%;
   width: 45rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
+  border-radius: 2.5rem;
+
 }
 
 /* Search bar */
 /*:global needed to override the react-bootstrap css*/
 .customSearchBar :global(.form-control) {
-  height: 4rem;     
+  height: 4.8rem;     
   font-size: 1rem; 
-  border-radius: 1rem;
+  border-radius: 2.5rem;
   border-right: none;
   transition: all 0.3s ease;
   padding-left:1.5rem;
@@ -54,7 +54,11 @@
 .customButton{
   width:4rem !important;
   border-left: none !important;
-  border-radius: 0 1rem 1rem 0!important;
+  border-radius: 0 40px 40px 0!important;
+}
+.customButton:hover {
+  background-color: #29292a !important;
+  color: white;
 }
 
 .searchResults{
@@ -63,18 +67,18 @@
 }
 
 .listCard {
-    max-width: 100%;
+  max-width: 100%;
   width: 45rem;
-    border-radius: .4rem;
-    border: 1px solid #eee;
-    cursor: pointer;
-   
+  border-radius: .4rem;
+  border: 1px solid #eee;
+  cursor: pointer;
+
 }
 
 .listCard:hover {
-    background-color: #e2e1e1;
-    border-color: #000000;
-    
+  background-color: #e2e1e1;
+  border-color: #000000;
+  transform: translateY(-2px);
 }
 
 .cardGroup{
@@ -110,34 +114,34 @@
 }
 
 .appName {
-    font-weight: 600;
-    font-size: 1.1rem;
-    color: #1a1a1a;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1a1a1a;
 }
 
 .companyName {
-    font-size: 0.85rem;
-    color: #6c757d; 
+  font-size: 0.85rem;
+  color: #6c757d; 
 }
 
 .plusButton {
-    background: none;
-    border: 1px solid #696969;
-    border-radius: 1rem;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000000;
-    font-size: 1.2rem;
+  background: none;
+  border: 1px solid #696969;
+  border-radius: 1rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  font-size: 1.2rem;
     
 }
 
 .plusButton:hover {
-    background-color: #29292a;
-    color: white;
-    border-color: #000000;
+  background-color: #000000;
+  color: white;
+  border-color: #000000;
 }
 
 
