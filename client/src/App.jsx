@@ -10,7 +10,7 @@ import {RouterProvider, createBrowserRouter, createRoutesFromElements, Route} fr
 const appRouter = createBrowserRouter(createRoutesFromElements(
 <Route path="/">
   <Route index element={<SearchPage />} />
-  <Route path= "report" element={<ReportPage />} />
+  <Route path= "report/:appId/:name" element={<ReportPage />} />
 </Route>));
 
 function App() {
