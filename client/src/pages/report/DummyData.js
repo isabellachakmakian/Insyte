@@ -33,6 +33,22 @@ export const appData = {
       title: "Perfect for communities",
       content: "Excellent for organizing group chats and servers.",
       date: "2024-04-05"
+    },
+    {
+      id: 4,
+      author: "TechEnthusiast",
+      rating: 4,
+      title: "Good app, could be better",
+      content: "Functional and user-friendly, but lacks some advanced features.",
+      date: "2024-04-01"
+    },
+    {
+      id: 5,
+      author: "StreamerLife",
+      rating: 5,
+      title: "My go-to for streaming",
+      content: "Makes coordinating streams with friends super easy.",
+      date: "2024-03-28"
     }
   ],
   downloads: "500M+",
@@ -47,6 +63,8 @@ export const appData = {
 // Multiple apps for testing
 export const appsList = [
   appData,
+
+  // SPOTIFY
   {
     id: "spotify-app-002",
     appName: "Spotify",
@@ -58,8 +76,52 @@ export const appsList = [
     ratingsCount: "40M",
     ratingAverage: 4.8,
     downloads: "500M+",
-    currentVersion: "8.9.12"
+    currentVersion: "8.9.12",
+    reviews: [
+      {
+        id: 1,
+        author: "MusicLover",
+        rating: 5,
+        title: "Best music app ever",
+        content: "The recommendations are insanely accurate. I discover new songs daily.",
+        date: "2024-04-12"
+      },
+      {
+        id: 2,
+        author: "PodcastFan",
+        rating: 4,
+        title: "Great for podcasts",
+        content: "Love the podcast selection, but the UI could be a bit cleaner.",
+        date: "2024-04-08"
+      },
+      {
+        id: 3,
+        author: "Audiophile",
+        rating: 5,
+        title: "Premium is worth it",
+        content: "The sound quality and offline mode make Premium a must-have.",
+        date: "2024-04-03"
+      },
+      {
+        id: 4,
+        author: "DailyDriver",
+        rating: 5,
+        title: "Use it every day",
+        content: "My daily commute would be boring without Spotify.",
+        date: "2024-03-29"
+      },
+      {
+        id: 5,
+        author: "ShuffleHater",
+        rating: 3,
+        title: "Shuffle needs improvement",
+        content: "Great app overall, but shuffle feels repetitive sometimes.",
+        date: "2024-03-25"
+      }
+    ]
   },
+
+  // NETFLIX
   {
     id: "netflix-app-003",
     appName: "Netflix",
@@ -71,7 +133,49 @@ export const appsList = [
     ratingsCount: "6.3M",
     ratingAverage: 4.7,
     downloads: "1B+",
-    currentVersion: "8.8.0"
+    currentVersion: "8.8.0",
+    reviews: [
+      {
+        id: 1,
+        author: "BingeWatcher",
+        rating: 5,
+        title: "Perfect for weekends",
+        content: "So many shows to binge. The new releases are fire.",
+        date: "2024-04-14"
+      },
+      {
+        id: 2,
+        author: "MovieBuff",
+        rating: 4,
+        title: "Great selection",
+        content: "Lots of great movies, but some classics are missing.",
+        date: "2024-04-09"
+      },
+      {
+        id: 3,
+        author: "FamilyTime",
+        rating: 5,
+        title: "Great for family nights",
+        content: "Tons of kid-friendly content and family movies.",
+        date: "2024-04-06"
+      },
+      {
+        id: 4,
+        author: "CriticMode",
+        rating: 3,
+        title: "UI could be better",
+        content: "Content is great but the interface feels cluttered.",
+        date: "2024-04-02"
+      },
+      {
+        id: 5,
+        author: "SeriesAddict",
+        rating: 5,
+        title: "Amazing originals",
+        content: "Netflix originals are top-tier. Worth the subscription.",
+        date: "2024-03-30"
+      }
+    ]
   }
 ];
 

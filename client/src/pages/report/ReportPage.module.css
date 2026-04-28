@@ -6,103 +6,10 @@
 }
 
 .reportPage h2 {
-  margin-bottom: 40px; /* adjust to taste */
-}
-
-/* MAIN ROW */
-.appBasics {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-}
-
-/* LEFT COLUMN — logo + text */
-.leftColumn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 25px;
-}
-
-.textBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* LOGO */
-.logo {
-  width: 110px;
-  height: 110px;
-  background-color: #d9d9d9;
-  border-radius: 20px;
-}
-
-/* TEXT */
-.appName {
-  font-size: 46px;
+  margin-bottom: 20px;
+  font-size: 40px;
   font-weight: 600;
-  color: #000;
-  line-height: 1.1;
 }
-
-.company {
-  font-size: 22px;
-  font-weight: 400;
-  color: #000;
-  opacity: 0.8;
-}
-
-/* RIGHT COLUMN — ratings */
-.ratingsColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.ratingGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-
-.ratingsText {
-  font-size: 20px;
-  font-weight: 400;
-  color: #000;
-  opacity: 0.7;
-}
-
-.ratingAverage {
-  font-size: 38px;
-  font-weight: 400;
-  color: #000;
-  line-height: 1;
-}
-
-/* STARS */
-.starRating {
-  display: flex;
-  gap: 5px;
-}
-
-.star {
-  width: 22px;
-  height: 22px;
-  background-color: #1e1e1e;
-  border-radius: 6px;
-}
-
-/* DESCRIPTION */
-.descriptionBox {
-  width: 550px;
-}
-
-
 
 /* CSS rule that controls the steps in an animation sequence */
 @keyframes fade-in {
