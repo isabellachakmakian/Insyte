@@ -1,7 +1,14 @@
-.reportPage{
-  margin: 10% 20%;
-  display: block;
-  animation: fade-in 3s;
+.reportPage {
+  max-width: 1245px;
+  margin: 0 auto;
+  padding: 100px 80px;
+  animation: fade-in 1.0s ease;
+}
+
+.reportPage h2 {
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: 600;
 }
 
 /* CSS rule that controls the steps in an animation sequence */

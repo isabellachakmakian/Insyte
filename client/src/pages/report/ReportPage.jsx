@@ -1,10 +1,15 @@
+import { appsList } from "./DummyData.js";
 import styles from './ReportPage.module.css'
 import {useState, useEffect} from 'react';
 import {useParams, useLocation} from 'react-router-dom';
 import {getAppDetails, getApps} from '../../api/searchApps.js';
 
+import AppDetailBasics from "./AppDetailBasics.jsx";
+import AppAnalytics from "./AppAnalytics";
+import AppReviews from "./AppReviews";
+
 export default function ReportPage(){
-    // Get appId & name from URL params 
+  // Get appId & name from URL params 
     let {appId, name} = useParams();
 
     // Essentialy allows you to pass data from one route to another
@@ -56,15 +61,22 @@ export default function ReportPage(){
     },[appId, name]);
 
     if (loading) return <div>Loading...</div>;
-    if (!reviews) return <div>Application not found.</div>;
-     
-    // Destructure the appData for easier access to the properties 
-    const {appName, trackId, developerName, iconUrl, genre, averageRating, ratingCount} = appData;
 
+    console.log("AppData in ReportPage:", appData);
+    console.log(`Reviews in ReportPage:`, reviews);
 
     return (
         <div className={styles.reportPage}>
-            <h2>Application Details/[Application Name]</h2>
+            <PageTitle app={appData} query={name} />
+            <AppDetailBasics app={appData} />
+            <AppAnalytics />
+            <AppReviews appReviews={reviews} />
         </div>
-    )
+    );
 }
+    
+
+const PageTitle = ({ app, query }) => {
+  const titleText = app ? app.appName : query;
+  return <h2>Application Details / {titleText}</h2>;
+};

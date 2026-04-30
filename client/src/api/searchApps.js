@@ -26,7 +26,7 @@ async function getAppDetails(id){
         const response = await fetch(urlToFetch);
         if(response.ok){
             const jsonResponse = await response.json();
-            const appDetails = jsonResponse.reviews;
+            const appDetails = jsonResponse;
             return appDetails;
         }
 

@@ -1,0 +1,123 @@
+.appBasics {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* LOGO */
+.logo {
+  width: 110px;
+  height: 110px;
+  border-radius: 10px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-color: #d9d9d9; /* NO LOGO BACKGROUND COLOR */
+}
+
+.hasLogo {
+  background-color: transparent;
+}
+
+/* TEXT SECTION */
+.appName {
+  font-size: 40px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.1;
+}
+.companyRow {
+  display: flex;
+  align-items: center;
+}
+
+.company {
+  font-size: 22px;
+  font-weight: 400;
+  color: #000;
+  opacity: 0.8;
+}
+
+.genreTag {
+  color: #5188FF; /* GENRE TAG COLOR */
+  padding: 4px 10px;
+  font-size: 22px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.descriptionBox {
+  max-width: 550px;
+}
+
+/* RATINGS SECTION */
+.ratingsColumn {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratingGroup {
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratingsText {
+  font-size: 20px;
+  font-weight: 400;
+  color: #000;
+  opacity: 0.7;
+}
+
+.ratingAverage {
+  font-size: 38px;
+  font-weight: 500;
+  color: #000;
+  line-height: 1;
+}
+
+/* STARS SECTION */
+.starRating {
+  display: flex;
+  gap: 8px;
+}
+
+.starFilled,
+.starEmpty {
+  font-size: 22px; /* STAR SIZE */
+  line-height: 1;
+  color: #000;
+  font-weight: 700; 
+}
+
+.starFilled {
+  color: #ffd677; /* FULL STAR COLOR */
+  font-weight: 700;
+}
+
+.starEmpty {
+  color: #d3d3d3; /* EMPTY STAR COLOR */
+  font-weight: 700;
+}
