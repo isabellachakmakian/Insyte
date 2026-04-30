@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styles from "./AppReviews.module.css";
 
-export default function AppReviews({ app }) {
-  const reviews = app?.reviews || [];
-  if (reviews.length === 0) {
+export default function AppReviews({appReviews}) {
+  
+  const reviews = appReviews?.reviews || [];
+  if (appReviews.reviewCount === 0) {
   return (
     <div className={styles.appReviewSection}>
       <h3>Ratings & Reviews</h3>

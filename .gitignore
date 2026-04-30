@@ -16,6 +16,7 @@ client/dist-ssr
 server/**/__pycache__/
 server/db.sqlite3
 server/**/*.pyc
+server/env/
 
 # Editor directories and files
 .vscode/*
