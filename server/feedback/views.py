@@ -2,6 +2,7 @@ import requests
 from django.http import JsonResponse
 from django.views import View
 from django.core.cache import cache
+from .models import App, Review
 # Fetch app names
 class SearchAppView(View):
     """
@@ -58,6 +59,20 @@ class SearchAppView(View):
  
         # Store in cache
         cache.set(cache_key, payload, self.CACHE_TIMEOUT)
+        
+        # Save app to database
+        for item in results:
+            App.objects.update_or_create(
+                track_id=item["trackId"],
+                defaults={
+                    "app_name": item["appName"],
+                    "developer_name": item["developerName"],
+                    "icon_url": item["iconUrl"],
+                    "genre": item["genre"],
+                    "average_rating": item["averageRating"],
+                    "rating_count": item["ratingCount"],
+                }
+            )
  
         return JsonResponse({**payload, "cached": False})
 # Fetch app reviews    
@@ -109,7 +124,7 @@ class FetchReviewsView(View):
                     entries = data.get("feed", {}).get("entry", [])
                     review_entries = entries[1:] if len(entries) > 1 else []
                     if review_entries:
-                        # Parse each review and drills down to actualy valuue, iTunes wraps every value
+                        # Parse each review and drills down to actual value, iTunes wraps every value
                         reviews = [
                             {
                                 "id": entry.get("id", {}).get("label"),
@@ -141,5 +156,22 @@ class FetchReviewsView(View):
 
         # Store in cache
         cache.set(cache_key, payload, self.CACHE_TIMEOUT)
+        
+        # Save reviews to database
+        try: 
+            app = App.objects.get(track_id=track_id)
+            for r in reviews:
+                Review.objects.get_or_create(
+                    review_id=r["id"],
+                    defaults={
+                        "app": app,
+                        "title": r["title"],
+                        "content": r["content"],
+                        "rating": r["rating"],
+                        "version": r["version"],
+                    }
+                )
+        except App.DoesNotExist:
+            pass
 
         return JsonResponse({**payload, "cached": False})
