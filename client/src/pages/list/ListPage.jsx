@@ -1,67 +1,137 @@
-import React from 'react'
-import { Card, Container, Row, Col } from 'react-bootstrap'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styles from './ListPage.module.css'
 
 const ListPage = () => {
     const navigate = useNavigate()
+    const [compareMode, setCompareMode] = useState(false)
+    const [selectedApps, setSelectedApps] = useState([])
 
+    // Repository: git@github.com/isabellachakmakian/Insyte.git
     const savedApps = [
         {
             appName: 'Spotify',
             iconUrl: 'https://cdn-icons-png.flaticon.com/512/174/174872.png',
             trackId: 'spotify-app-002',
-            genre: 'Productivity',
+            genre: 'Music',
+            developer: 'Spotify Ltd.',
         },
         {
             appName: 'Netflix',
             iconUrl: 'https://cdn-icons-png.flaticon.com/512/732/732228.png',
             trackId: 'netflix-app-003',
-            genre: 'Photography',
+            genre: 'Entertainment',
+            developer: 'Netflix, Inc.',
         },
         {
             appName: 'Discord',
             iconUrl: 'https://logodownload.org/wp-content/uploads/2017/11/discord-logo-1.png',
             trackId: 'discord-app-001',
-            genre: 'Health & Fitness',
+            genre: 'Social',
+            developer: 'Discord Inc.',
         },
     ]
 
-    const handleCardClick = (trackId, appName) => {
-        navigate(`/report/${trackId}/${appName}`)
+    const toggleSelectApp = (trackId) => {
+        setSelectedApps((prev) =>
+            prev.includes(trackId)
+                ? prev.filter((id) => id !== trackId)
+                : [...prev, trackId]
+        )
+    }
+
+    const handleCardClick = (app) => {
+        if (compareMode) {
+            toggleSelectApp(app.trackId)
+            return
+        }
+
+        navigate(`/report/${app.trackId}/${app.appName}`)
+    }
+
+    const handleCompareButton = (e, app) => {
+        e.stopPropagation()
+        setCompareMode(true)
+        setSelectedApps((prev) =>
+            prev.includes(app.trackId) ? prev : [...prev, app.trackId]
+        )
+    }
+
+    const handleExitCompare = () => {
+        setCompareMode(false)
+        setSelectedApps([])
     }
 
     return (
-        <Container className="py-4">
-            <Row className="mb-4">
-                <Col>
-                    <h1>Saved Apps</h1>
-                    <p>Click any app card to go to its details page.</p>
-                </Col>
-            </Row>
+        <div className={styles.listPage}>
+            <div className={styles.headerRow}>
+                <div>
+                    <h1>Tracked Apps</h1>
+                    <p>Click any app card to view detailed analytics and insights</p>
+                </div>
 
-            <Row xs={1} sm={2} md={3} className="g-4">
-                {savedApps.map((app) => (
-                    <Col key={app.trackId}>
-                        <Card
-                            className="h-100"
-                            onClick={() => handleCardClick(app.trackId, app.appName)}
-                            style={{ cursor: 'pointer' }}
+                <button
+                    className={`${styles.topCompareButton} ${compareMode ? styles.topCompareButtonActive : ''}`}
+                    onClick={() => {
+                        if (compareMode) {
+                            handleExitCompare()
+                        } else {
+                            setCompareMode(true)
+                        }
+                    }}
+                >
+                    {compareMode ? 'Exit Compare' : '+ Compare'}
+                </button>
+            </div>
+
+            {compareMode && (
+                <div className={styles.compareNotice}>
+                    {selectedApps.length > 0
+                        ? `${selectedApps.length} app(s) selected. Click cards to add or remove from comparison.`
+                        : 'Click app cards to select them for comparison.'}
+                </div>
+            )}
+
+            <div className={styles.appsGrid}>
+                {savedApps.map((app) => {
+                    const isSelected = selectedApps.includes(app.trackId)
+                    return (
+                        <div
+                            key={app.trackId}
+                            className={`${styles.appCard} ${isSelected ? styles.selectedCard : ''}`}
+                            onClick={() => {
+                                if (compareMode) {
+                                    toggleSelectApp(app.trackId)
+                                } else {
+                                    handleCardClick(app)
+                                }
+                            }}
                         >
-                            <Card.Img
-                                variant="top"
-                                src={app.iconUrl}
-                                alt={`${app.appName} icon`}
-                                style={{ height: '220px', objectFit: 'cover' }}
+                            <div
+                                className={styles.appIcon}
+                                style={{
+                                    backgroundImage: `url(${app.iconUrl})`,
+                                }}
+                                aria-label={`${app.appName} icon`}
                             />
-                            <Card.Body>
-                                <Card.Title>{app.appName}</Card.Title>
-                                <Card.Text>{app.genre}</Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
-        </Container>
+
+                            <div className={styles.appInfo}>
+                                <h2 className={styles.appName}>{app.appName}</h2>
+                                <div className={styles.appMeta}>
+                                    <span className={styles.developer}>{app.developer}</span>
+                                    <span className={styles.metaSeparator}>•</span>
+                                    <span className={styles.genreTag}>{app.genre}</span>
+                                </div>
+                            </div>
+
+                            {compareMode && isSelected && (
+                                <div className={styles.selectedBadge}>✓ Selected</div>
+                            )}
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
     )
 }
 
