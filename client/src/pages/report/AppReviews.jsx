@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./AppReviews.module.css";
 
 export default function AppReviews({appReviews}) {
-  
+  console.log(`{appReviews}`)
   const reviews = appReviews?.reviews || [];
   if (appReviews.reviewCount === 0) {
   return (
@@ -35,7 +35,13 @@ export default function AppReviews({appReviews}) {
   return (
     <div className={styles.appReviewSection}>
       {/* HEADING TITLE */}
-      <h3>Ratings & Reviews</h3>
+      
+      
+      <div className= {styles.sectionHeader}>
+        <h1>Ratings & Reviews</h1>
+        <p>Use buttons to look through reviews left on the App Store</p>
+      </div>
+     
 
       <div className={styles.reviewContainer}>
         {/* LEFT ARROW BUTTON */}
@@ -44,7 +50,7 @@ export default function AppReviews({appReviews}) {
         <div className={styles.reviewCards}>
           {visibleReviews.map((r) => {
             const MAX_STARS = 5;
-            const filledStars = r.rating;
+            const filledStars = Number(r.rating) || 0;
 
             return (
               <div key={r.id} className={styles.reviewCard}>
@@ -53,11 +59,15 @@ export default function AppReviews({appReviews}) {
 
                 {/* STAR RATING */}
                 <div className={styles.starRating}>
-                  {Array.from({ length: MAX_STARS }).map((_, i) => (
-                    <span key={i} className={i < filledStars ? styles.starFilled : styles.starEmpty}>
-                    ★
-                    </span>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                      <span 
+                          key={i} 
+                          className={i < filledStars ? styles.starFilled : styles.starEmpty}
+                      >
+                          ★
+                      </span>
                   ))}
+            
                 </div>
 
                 {/* REVIEW CONTENT */}

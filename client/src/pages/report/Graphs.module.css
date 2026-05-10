@@ -1,0 +1,57 @@
+.graphsContainer {
+    padding: 2rem 0; 
+    display:flex;
+    justify-content: center;
+
+}
+
+.graphBox {
+    background: rgba(255, 254, 254, 0.95); 
+    border: 1px solid rgba(0, 0, 0, 0.05); 
+    
+    border-radius: 1rem; 
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.graphBox:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(79, 172, 254, 0.1);
+  
+}
+
+.graphInformation h4 {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #9ca3af; /* Muted label look [cite: 146, 180] */
+    letter-spacing: 0.05rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.graphImage {
+    flex-grow: 1;
+    width: 100%;
+    min-height: 300px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* For empty states */
+.emptyGraphPlaceholder {
+    width: 100%;
+    height: 300px;
+    background: #f9fafb;
+    border: 1px dashed #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-style: italic;
+    font-size: 0.9rem;
+}

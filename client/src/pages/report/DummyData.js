@@ -179,4 +179,127 @@ export const appsList = [
   }
 ];
 
+
+export let savedApps = [
+  {
+    appId: "101",
+    appName: "Nova Task Manager",
+    trackId: "track-101",
+    developerName: "Lumina Softworks",
+    iconUrl: "", // Using placeholder images for testing
+    genre: "Productivity",
+    averageRating: 4.8,
+    ratingCount: 125400, // Will test your "125K" logic
+    reviews: [
+      { id: 1, author: "Alex D.", content: "The best task flow I've used.", rating: 5 },
+      { id: 2, author: "Jordan K.", content: "Solid, but needs a dark mode.", rating: 4 }
+    ]
+  },
+  {
+    appId: "205",
+    appName: "Ash App",
+    trackId: "track-205",
+    developerName: "Capital Logic",
+    iconUrl: "",
+    genre: "Finance",
+    averageRating: 4.2,
+    ratingCount: 8900, // Will test your "8.9K" logic
+    reviews: [
+      { id: 1, author: "Sarah P.", content: "Clean charts, very professional.", rating: 4 },
+      { id: 2, author: "Mike W.", content: "Syncing takes a few seconds.", rating: 3 }
+    ]
+  },
+  {
+    appId: "309",
+    appName: "Velo Health",
+    trackId: "track-309",
+    developerName: "BioTrack Systems",
+    iconUrl: "",
+    genre: "Health & Fitness",
+    averageRating: 3.9,
+    ratingCount: 1040500, // Will test your "1M" logic
+    reviews: [
+      { id: 1, author: "Chris T.", content: "Great for tracking runs.", rating: 5 },
+      { id: 2, author: "Elena R.", content: "A bit heavy on the battery.", rating: 2 }
+    ]
+  },
+  {
+    appId: "405",
+    appName: "Zeniitor",
+    trackId: "track-405",
+    developerName: "PixelArt Labs",
+    iconUrl: "",
+    genre: "Photography",
+    averageRating: 4.5,
+    ratingCount: 450, // Tests the logic when under 1K
+    reviews: [
+      { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
+    ]
+  },
+  {
+    appId: "505",
+    appName: "ZeEditor",
+    trackId: "track-505",
+    developerName: "PixelArt Labs",
+    iconUrl: "",
+    genre: "Photography",
+    averageRating: 4.5,
+    ratingCount: 450, // Tests the logic when under 1K
+    reviews: [
+      { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
+    ]
+  },
+  {
+    appId: "606",
+    appName: "Zeniitor",
+    trackId: "track-606",
+    developerName: "PixelArt Labs",
+    iconUrl: "",
+    genre: "Photography",
+    averageRating: 4.5,
+    ratingCount: 450, // Tests the logic when under 1K
+    reviews: [
+      { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
+    ]
+  },
+  {
+    appId: "707",
+    appName: "Zeniditor",
+    trackId: "track-707",
+    developerName: "PixeLabs",
+    iconUrl: "",
+    genre: "Photography",
+    averageRating: 4.5,
+    ratingCount: 450, // Tests the logic when under 1K
+    reviews: [
+      { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
+    ]
+  },
+  {
+    appId: "808",
+    appName: "Ashly app last",
+    trackId: "track-808",
+    developerName: "PixeLabs",
+    iconUrl: "",
+    genre: "Photography",
+    averageRating: 4.5,
+    ratingCount: 450, // Tests the logic when under 1K
+    reviews: [
+      { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
+    ]
+  }
+];
+
+export const positiveInsights = [
+    { label: 'UI/UX', text: 'Highly intuitive navigation flow optimized for React-Vite.' },
+    { label: 'Runtime', text: 'Efficient memory allocation during large dataset renders.' },
+    { label: 'Aesthetic', text: 'Glassmorphism implementation adds professional depth.' }
+  ];
+
+export const negativeInsights = [
+    { label: 'Latency', text: 'Potential fetch delays identified in the backend migrations.' },
+    { label: 'Memory', text: 'High overhead detected when scaling complex data structures.' },
+    { label: 'DevOps', text: 'Unused dependencies found in the current Vite skeleton.' }
+  ];
+  
 export default appData;

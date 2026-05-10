@@ -1,15 +1,68 @@
 .reportPage {
-  max-width: 1245px;
-  margin: 0 auto;
-  padding: 100px 80px;
-  animation: fade-in 1.0s ease;
+  animation: fade-in 3.0s ease;
+  background-color: #f1f1f1;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-.reportPage h2 {
-  margin-bottom: 20px;
-  font-size: 40px;
-  font-weight: 600;
+.reportWrapper{
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  min-height: 100vh;
 }
+
+/* --- Report Content Tab --- */
+.tabNav {
+    background-color: #f7f7f7;
+    display: flex;
+    gap: 2rem;
+    padding:.5rem 1rem;
+
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tab {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #545861;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.activeTab {
+    background: none;
+    border: none;
+    padding: .5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000000;
+    border-bottom: 2px solid #000000;
+}
+
+/* --- Report Content --- */
+.contentArea{
+    background-color: #f7f7f7;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    min-height: 60vh;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: none;
+    padding:2rem;
+
+}
+
+
 
 /* CSS rule that controls the steps in an animation sequence */
 @keyframes fade-in {

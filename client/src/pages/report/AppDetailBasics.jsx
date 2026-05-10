@@ -1,41 +1,118 @@
 import styles from "./AppDetailBasics.module.css";
+import { useNavigate } from "react-router-dom";
+import Accordion from 'react-bootstrap/Accordion';
 
-export default function AppDetailBasics({ app }) {
+export default function AppDetailBasics({ app, onCompareClick }) {
+  const navigate = useNavigate();
+  const { 
+        appName, developerName, iconUrl, genre, 
+        averageRating, ratingCount, contentAdvisoryRating,
+        version 
+    } = app;
+
   const iconStyle = {
     backgroundImage: app.iconUrl ? `url(${app.iconUrl})` : 'none',
     backgroundColor: '#e1e4e8'
   };
 
+  const formatNum = (n) => n >= 1000000 ? (n/1000000).toFixed(1) + 'M' : (n/1000).toFixed(0) + 'K';
+  
+  const handleReturn = () =>{
+    navigate(`/`)
+  }
+
   return (
-    <div className={styles.appBasics}>
-      <div className={styles.leftColumn}>
+    <div className={styles.basicDetailsWrapper}>
 
-        {/* LOGO */}
-        <div
-          className={`${styles.logo} ${app.iconUrl ? styles.hasLogo : ""}`}
-          style={iconStyle}
-        />
+      {/* The Navigational Back Button (Top Left) */}
+      <button className={styles.backLink} onClick={handleReturn}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to Search
+      </button>
 
-        {/* TEXT BLOCK */}
-        <div className={styles.textBlock}>
-          <div className={styles.appName}>{app.appName}</div>
+      {/* App Infortmation Section */}
+      <div className={styles.appDetails}>
 
-          <div className={styles.companyRow}>
-            <span className={styles.company}>{app.developerName}</span>
-            <span className={styles.genreTag}>• {app.genre}</span>
+        {/* Main Header - App logo and compare button */}
+        <header className={styles.mainHeader}>
+          
+          <div className={styles.appIdentity}>
+            <img src={iconUrl} alt={appName} className={styles.appIcon} />
+            <div className={styles.appTitleGroup}>
+              <h1>{appName}</h1>
+              <span className={styles.developerSub}>{developerName}</span>
+            </div>
           </div>
+            
+          <button className={styles.compareBtn} onClick={onCompareClick}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            Compare
+          </button>
+
+        </header>
+
+        {/* Detailed App Information Section */}
+        <div className={styles.infoBar}>
+
+          {/* Rating */}
+          <div className={styles.infoSection}>
+            <span className={styles.infoLabel}>{formatNum(ratingCount)} RATINGS</span>
+            <span className={styles.infoValue}>{averageRating.toFixed(1)} ★</span>
+          </div>
+              
+          <div className={styles.divider}></div>
+
+          {/* Content Adivsory Rating */}
+          <div className={styles.infoSection}>
+            <span className={styles.infoLabel}>AGE</span>
+            <span className={styles.infoValue}>{contentAdvisoryRating}</span>
+          </div>
+
+          <div className={styles.divider}></div>
+
+          {/* Genre */}
+          <div className={styles.infoSection}>
+            <span className={styles.infoLabel}>GENRE</span>
+            <div className={styles.iconValue}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2v20M2 12h20" /></svg>
+              <span className={styles.infoValue}>{genre}</span>
+            </div>
+          </div>
+
+          <div className={styles.divider}></div>
+
+          {/* Developer */}
+          <div className={styles.infoSection}>
+            <span className={styles.infoLabel}>DEVELOPER</span>
+            <div className={styles.iconValue}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+              <span className={styles.infoValue}>{developerName}</span>
+            </div>
+          </div>
+
+          <div className={styles.divider}></div>
+          
+          {/* Version */}
+          <div className={styles.infoSection}>
+            <span className={styles.infoLabel}>VERSION</span>
+            <span className={styles.infoValue}>v{version}</span>
+          </div>
+
         </div>
+
+        {/*App Description */}
+        
       </div>
 
-      {/* RATINGS SECTION */}
-      <AppRating
-        ratingAverage={app.averageRating}
-        ratingsCount={app.ratingCount}
-      />
     </div>
   );
 }
 
+/*
 function AppRating({ ratingAverage, ratingsCount }) {
   const MAX_STARS = 5;
   
@@ -85,4 +162,4 @@ function AppRating({ ratingAverage, ratingsCount }) {
       </div>
     </div>
   );
-}
+}*/

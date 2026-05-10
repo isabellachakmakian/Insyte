@@ -1,18 +1,26 @@
-import { appsList } from "./DummyData.js";
 import styles from './ReportPage.module.css'
+
+import { appsList } from "./DummyData.js";
+import {savedApps} from './DummyData.js';
+
 import {useState, useEffect} from 'react';
 import {useParams, useLocation} from 'react-router-dom';
 import {getAppDetails, getApps} from '../../api/searchApps.js';
 
+import Modal from 'react-bootstrap/Modal';
+import CompareModal from './CompareModal.jsx';
+
 import AppDetailBasics from "./AppDetailBasics.jsx";
 import AppAnalytics from "./AppAnalytics";
+import Graphs from "./Graphs.jsx"
 import AppReviews from "./AppReviews";
+
 
 export default function ReportPage(){
   // Get appId & name from URL params 
     let {appId, name} = useParams();
 
-    // Essentialy allows you to pass data from one route to another
+    // Allows you to pass data from one route to another
     const location = useLocation();
 
     // Initialize appData state with location.state OR null
@@ -24,6 +32,9 @@ export default function ReportPage(){
     const [reviews, setReviews] = useState(null);
     const [loading, setLoading] = useState(true);
     
+    // State to determine what report content to render
+    const [activeTab, setActiveTab] = useState('overview');
+    const [showCompareModal, setShowCompareModal] = useState(false);
     
     useEffect(()=>{
         const fetchReport = async() =>{
@@ -67,16 +78,56 @@ export default function ReportPage(){
 
     return (
         <div className={styles.reportPage}>
-            <PageTitle app={appData} query={name} />
-            <AppDetailBasics app={appData} />
-            <AppAnalytics />
-            <AppReviews appReviews={reviews} />
+            {/* Global Naviation should be placed here */}
+
+            <div className={styles.reportWrapper}>
+                {/* App Header - Displays app info and compare button */}
+                <AppDetailBasics 
+                    app={appData} 
+                    onCompareClick={() => setShowCompareModal(true)} 
+                />
+
+                {/* Report Navigation */}
+                <nav className={styles.tabNav}>
+                    <button 
+                        className={activeTab === 'overview' ? styles.activeTab : styles.tab} 
+                        onClick={() => setActiveTab('overview')}
+                    >
+                        Overview & AI
+                    </button>
+
+                    <button 
+                        className={activeTab === 'analytics' ? styles.activeTab : styles.tab} 
+                        onClick={() => setActiveTab('analytics')}
+                    >
+                        Metrics
+                    </button>
+
+                    <button 
+                        className={activeTab === 'reviews' ? styles.activeTab : styles.tab} 
+                        onClick={() => setActiveTab('reviews')}
+                    >
+                        Community 
+                    </button>
+                </nav>
+
+                {/* Dynamic Content Area */}
+                <main className={styles.contentArea}>
+                    {activeTab === 'overview' && <AppAnalytics app={appData} />}
+                    {activeTab === 'analytics' && <Graphs />}
+                    {activeTab === 'reviews' && <AppReviews appReviews={reviews} />}
+                </main>
+                
+                {/* Hidden Modal, ready to be triggered */}
+                <CompareModal 
+                    show={showCompareModal} 
+                    onHide={() => setShowCompareModal(false)} 
+                    currentApp={appData} 
+                    savedApps={savedApps} 
+                />
+            </div> 
         </div>
     );
 }
     
 
-const PageTitle = ({ app, query }) => {
-  const titleText = app ? app.appName : query;
-  return <h2>Application Details / {titleText}</h2>;
-};
