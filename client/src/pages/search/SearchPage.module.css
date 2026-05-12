@@ -1,7 +1,32 @@
 .searchPage{
-  margin: 10% 20%; 
-  display: block;
+  max-width: 100%;
+  max-height: fit-content;
   animation: fade-in 3s;
+  background-color: #f7f7f7;
+}
+
+.PageTitle {
+  width: 100%;
+  height: fit-content;
+  padding: 15px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PageTitle h1 {
+  margin-top: 40px;
+  font-size: 40px;
+  font-weight: 600;
+  color: #222;
+  line-height: 30px;
+}
+
+.PageTitle h2 {
+  font-size: 24px;
+  color: #555;
+  margin-top: 15px;
+  margin-bottom: 30px;
 }
 
 /* CSS rule that controls the steps in an animation sequence */
@@ -12,11 +37,6 @@
   to {
     opacity: 1.0;
   }
-}
-
-/* Styling text div above search bar */
-.aboutContent{
-  padding-bottom:1rem;
 }
 
 /* Styling div containing search bar */
@@ -62,8 +82,14 @@
 }
 
 .searchResults{
+  padding: 0px 60px;
   margin-top: 2rem;
   
+}
+
+.resultsColumn {
+  display: flex;
+  justify-content: center;
 }
 
 .listCard {

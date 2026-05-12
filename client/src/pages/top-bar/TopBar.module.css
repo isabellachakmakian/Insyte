@@ -1,0 +1,93 @@
+.topBar {
+  width: 100%;
+  height: 75px;
+  background: #ffffff; /* TOP BAR BACKGROUND COLOR */
+  border-bottom: 1px solid #e5e5e5;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 60px;
+  box-sizing: border-box;
+}
+
+/* LEFT SIDE */
+.Insyte {
+  display: flex;
+  align-items: center;
+  border: none;
+  outline: none;
+  background: none;
+  gap: 10px;
+  padding: 8px 12px; 
+  cursor: pointer;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  color: #222; /* LOGO COLOR */
+}
+
+.siteName {
+  font-size: 20px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* RIGHT SIDE */
+.Navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 3px;
+}
+
+.savedButton {
+  width: 60px;
+  height: 50px;
+  padding: 8px 3px;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+.userButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  padding: 8px 10px;
+  gap: 8px;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+.userButton span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #444;
+}
+
+.arrow {
+  width: 15px;
+  height: 15px;
+  color: #444;
+}
+
+.savedButton:hover,
+.userButton:hover,
+.Insyte:hover {
+  background-color: #dcdcdc;
+  border-radius: 25px;
+}
+
+.navIcons {
+  width: 26px;
+  height: 26px;
+  color: #222;
+}
