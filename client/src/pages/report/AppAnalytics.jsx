@@ -1,7 +1,7 @@
 import styles from "./AppAnalytics.module.css";
 import { Container, Row, Col } from 'react-bootstrap';
 import { positiveInsights, negativeInsights } from "./DummyData";
-
+import DummyMetricsSummaryRow from './DummyMetricsSummaryRow';
 export const AppAnalytics = ({app}) => {
   
   return (
@@ -18,6 +18,7 @@ export const AppAnalytics = ({app}) => {
             <p>Scroll down to view a detailed overview with AI analysis</p>
           </div>
         </Col>
+        <DummyMetricsSummaryRow />
 
         {/* LEFT: Positive Insights Card */}
         <Col lg={6}>
@@ -73,7 +74,9 @@ export const AppAnalytics = ({app}) => {
           </div>
         </Col>
 
+
       </Row>
+      
     </Container>
   );
 };

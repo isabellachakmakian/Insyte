@@ -14,7 +14,7 @@ import AppDetailBasics from "./AppDetailBasics.jsx";
 import AppAnalytics from "./AppAnalytics";
 import Graphs from "./Graphs.jsx"
 import AppReviews from "./AppReviews";
-
+import DummyGraphs from './DummyGraphs.jsx';    
 
 export default function ReportPage(){
   // Get appId & name from URL params 
@@ -114,7 +114,7 @@ export default function ReportPage(){
                 {/* Dynamic Content Area */}
                 <main className={styles.contentArea}>
                     {activeTab === 'overview' && <AppAnalytics app={appData} />}
-                    {activeTab === 'analytics' && <Graphs />}
+                    {activeTab === 'analytics' && <DummyGraphs />}
                     {activeTab === 'reviews' && <AppReviews appReviews={reviews} />}
                 </main>
                 

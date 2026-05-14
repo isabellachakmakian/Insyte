@@ -1,0 +1,157 @@
+.reportPage {
+    animation: fadeIn 1.5s ease;
+    background-color: #f1f1f1;
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+    padding-bottom: 5rem;
+    padding: 2rem 0; 
+}
+
+.reportWrapper {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #88898a;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s;
+}
+
+.backLink:hover { color: #111827; }
+
+
+.stickyHeader {
+    background-color: #f7f7f7;
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+   
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    
+}
+
+.appIdentity {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.appIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.vsCircle {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin: 0 auto;
+}
+
+.contentArea {
+    background-color: #f7f7f7;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: none;
+    padding: 2.5rem;
+}
+
+.metricRow {
+    display: grid;
+    grid-template-columns: 1fr 150px 1fr;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.metricLabel {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metricValue {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.winner {
+    color: #10b981; /* Green for better metric */
+}
+
+.warning {
+    color: #ef4444; /* Red for churn risk */
+}
+
+.featureGapBox {
+    background: #fff;
+    border: 1px dashed #d1d5db;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+/*Dummy graph in the comparision page */
+.graphBox {
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef0f2;
+    
+}
+
+.graphDesc {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.graphDesc em {
+    font-weight: 600;
+    font-style: normal;
+    color: #1e293b;
+}

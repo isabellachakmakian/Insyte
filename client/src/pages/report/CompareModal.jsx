@@ -5,10 +5,16 @@ import styles from './CompareModal.module.css';
 
 const CompareModal = ({ show, onHide, currentApp, savedApps }) => {
   const navigate = useNavigate();
+  
+  const handleSelection = (targetApp) => {
 
-  const handleSelection = (targetAppId) => {
     // Navigate to the compare route with both IDs in the URL
-    navigate(`/compare?app1=${currentApp.id}&app2=${targetAppId}`);
+    navigate(`/compare?app1=${currentApp.trackId}&app2=${targetApp.appId}`, { 
+      state: { 
+          app1Data: currentApp, 
+          app2Data: targetApp 
+      } 
+    });
     onHide();
   };
 
@@ -53,7 +59,7 @@ const CompareModal = ({ show, onHide, currentApp, savedApps }) => {
                 <div 
                   key={app.id} 
                   className={styles.selectableCard}
-                  onClick={() => handleSelection(app.id)}
+                  onClick={() => handleSelection(app)}
                 >
                   <div 
                     className={styles.appIcon} 

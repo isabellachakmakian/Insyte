@@ -23,7 +23,7 @@ export default function SearchResultForm({searchResults}) {
             
             <Row xs={1} className="g-3"> 
                 {searchResults.map((app) => (
-                    <Col key={app.trackId}>
+                    <Col key={app.trackId} className={styles.resultsColumn}>
                         <Card 
                             className={`${styles.listCard} shadow-sm`} 
                             onClick={() => handleUserSelection(app)}

@@ -180,16 +180,22 @@ export const appsList = [
 ];
 
 
-export let savedApps = [
+export let savedApps = 
+[
   {
     appId: "101",
-    appName: "Nova Task Manager",
+    appName: "EcoTrack",
+    iconUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-w-XsTOTwXFg3VPoiCbGoPdpwnmPilsQxQw&s", // ecobee icon
+    reviewVelocity: "450 reviews/mo",
+    velocityTrend: "+12%",
+    lastUpdated: "29 days ago",
+    latestVersionRating: 4.3,
+    requestedFeatures: "Dark Mode, Export to CSV",
     trackId: "track-101",
     developerName: "Lumina Softworks",
-    iconUrl: "", // Using placeholder images for testing
     genre: "Productivity",
     averageRating: 4.8,
-    ratingCount: 125400, // Will test your "125K" logic
+    ratingCount: 125400,
     reviews: [
       { id: 1, author: "Alex D.", content: "The best task flow I've used.", rating: 5 },
       { id: 2, author: "Jordan K.", content: "Solid, but needs a dark mode.", rating: 4 }
@@ -197,13 +203,13 @@ export let savedApps = [
   },
   {
     appId: "205",
-    appName: "Ash App",
+    appName: "Ash Cap",
     trackId: "track-205",
     developerName: "Capital Logic",
-    iconUrl: "",
+    iconUrl: "https://img.freepik.com/free-vector/gradient-stock-market-concept_23-2149166910.jpg", // Finance/Stock icon
     genre: "Finance",
     averageRating: 4.2,
-    ratingCount: 8900, // Will test your "8.9K" logic
+    ratingCount: 8900,
     reviews: [
       { id: 1, author: "Sarah P.", content: "Clean charts, very professional.", rating: 4 },
       { id: 2, author: "Mike W.", content: "Syncing takes a few seconds.", rating: 3 }
@@ -214,10 +220,10 @@ export let savedApps = [
     appName: "Velo Health",
     trackId: "track-309",
     developerName: "BioTrack Systems",
-    iconUrl: "",
+    iconUrl: "https://img.freepik.com/free-vector/running-man-logo-design_1411-40.jpg", // Health/Running icon
     genre: "Health & Fitness",
     averageRating: 3.9,
-    ratingCount: 1040500, // Will test your "1M" logic
+    ratingCount: 1040500, // Tests the "1M" logic
     reviews: [
       { id: 1, author: "Chris T.", content: "Great for tracking runs.", rating: 5 },
       { id: 2, author: "Elena R.", content: "A bit heavy on the battery.", rating: 2 }
@@ -225,26 +231,26 @@ export let savedApps = [
   },
   {
     appId: "405",
-    appName: "Zeniitor",
+    appName: "GymFax",
     trackId: "track-405",
     developerName: "PixelArt Labs",
-    iconUrl: "",
+    iconUrl: "https://img.freepik.com/free-vector/shutter-camera-logo-template_23-2148197793.jpg", // Photo/Lens icon
     genre: "Photography",
     averageRating: 4.5,
-    ratingCount: 450, // Tests the logic when under 1K
+    ratingCount: 450,
     reviews: [
       { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
     ]
   },
   {
     appId: "505",
-    appName: "ZeEditor",
+    appName: "Polar Editor",
     trackId: "track-505",
     developerName: "PixelArt Labs",
-    iconUrl: "",
+    iconUrl: "https://img.freepik.com/free-vector/colorful-photo-editor-app-logo_23-2148202573.jpg", // Editing icon
     genre: "Photography",
     averageRating: 4.5,
-    ratingCount: 450, // Tests the logic when under 1K
+    ratingCount: 450,
     reviews: [
       { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
     ]
@@ -254,23 +260,23 @@ export let savedApps = [
     appName: "Zeniitor",
     trackId: "track-606",
     developerName: "PixelArt Labs",
-    iconUrl: "",
+    iconUrl: "https://img.freepik.com/free-vector/camera-shutter-design_1308-10041.jpg", 
     genre: "Photography",
     averageRating: 4.5,
-    ratingCount: 450, // Tests the logic when under 1K
+    ratingCount: 450,
     reviews: [
       { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
     ]
   },
   {
     appId: "707",
-    appName: "Zeniditor",
+    appName: "BoxRox",
     trackId: "track-707",
     developerName: "PixeLabs",
-    iconUrl: "",
+    iconUrl: "https://img.freepik.com/free-vector/gradient-shutter-logo-template_23-2148201201.jpg", 
     genre: "Photography",
     averageRating: 4.5,
-    ratingCount: 450, // Tests the logic when under 1K
+    ratingCount: 450,
     reviews: [
       { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
     ]
@@ -280,15 +286,15 @@ export let savedApps = [
     appName: "Ashly app last",
     trackId: "track-808",
     developerName: "PixeLabs",
-    iconUrl: "",
+    iconUrl: "https://img.freepik.com/free-vector/colorful-camera-shutter-background_23-2148197028.jpg", 
     genre: "Photography",
     averageRating: 4.5,
-    ratingCount: 450, // Tests the logic when under 1K
+    ratingCount: 450,
     reviews: [
       { id: 1, author: "Tom H.", content: "The filters are high quality.", rating: 5 }
     ]
   }
-];
+]
 
 export const positiveInsights = [
     { label: 'UI/UX', text: 'Highly intuitive navigation flow optimized for React-Vite.' },
@@ -301,5 +307,5 @@ export const negativeInsights = [
     { label: 'Memory', text: 'High overhead detected when scaling complex data structures.' },
     { label: 'DevOps', text: 'Unused dependencies found in the current Vite skeleton.' }
   ];
-  
+
 export default appData;

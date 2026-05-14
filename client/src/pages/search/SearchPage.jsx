@@ -12,19 +12,17 @@ export default function SearchPage(){
         setSearchResults(data);
         setIsSearched(true);
     }
-
-    
+ 
     return (       
-            <div className= {styles.searchPage}>
-                <div className ={styles.aboutContent}>
-                    <h1>Welcome to Insyte</h1>
-                    <h2>Obtain a report on an application today</h2>
-                </div>      
+        <div className={styles.searchPage}>
+            <div className={styles.PageTitle}>
+                <h1>Welcome to Insyte</h1>
+                <h2>Obtain a report on an application today</h2>
 
                 <SearchBar onSearchSuccess={onSearchSuccess} />
-
-                {isSearched && <SearchResultForm searchResults={searchResults} />}           
-            </div>  
+                {isSearched && <SearchResultForm searchResults={searchResults} />}   
+                
+            </div>              
+        </div>  
         )
-
 }

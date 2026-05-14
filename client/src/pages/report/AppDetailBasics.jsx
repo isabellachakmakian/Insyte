@@ -2,6 +2,7 @@ import styles from "./AppDetailBasics.module.css";
 import { useNavigate } from "react-router-dom";
 import Accordion from 'react-bootstrap/Accordion';
 
+
 export default function AppDetailBasics({ app, onCompareClick }) {
   const navigate = useNavigate();
   const { 
@@ -69,7 +70,8 @@ export default function AppDetailBasics({ app, onCompareClick }) {
           {/* Content Adivsory Rating */}
           <div className={styles.infoSection}>
             <span className={styles.infoLabel}>AGE</span>
-            <span className={styles.infoValue}>{contentAdvisoryRating}</span>
+            {/*<span className={styles.infoValue}>{contentAdvisoryRating}</span>*/}
+            <span className={styles.infoValue}>4+</span>
           </div>
 
           <div className={styles.divider}></div>
@@ -99,12 +101,14 @@ export default function AppDetailBasics({ app, onCompareClick }) {
           {/* Version */}
           <div className={styles.infoSection}>
             <span className={styles.infoLabel}>VERSION</span>
-            <span className={styles.infoValue}>v{version}</span>
+            <span className={styles.infoValue}>v4.17.82{version}</span>
           </div>
 
         </div>
 
         {/*App Description */}
+
+        
         
       </div>
 
