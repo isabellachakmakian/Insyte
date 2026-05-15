@@ -1,16 +1,23 @@
 import styles from "./AppAnalytics.module.css";
 import { Container, Row, Col } from 'react-bootstrap';
 
-export const AppAnalytics = () => {
+export const AppAnalytics = ({ onSave, isSaved, saving }) => {
   return (
     <Container fluid className={styles.analyticsSection}>
-      
+
       {/* HEADER ROW */}
       <Row className={`${styles.analyticsHeader} mb-4`}>
         <Col>
           <h3 className={styles.analyticsTitle}>App Analytics</h3>
         </Col>
-        <Col xs="auto">
+        <Col xs="auto" className={styles.actionButtonGroup}>
+          <button
+            className={`${styles.saveButton} ${isSaved ? styles.saveButtonActive : ''}`}
+            onClick={onSave}
+            disabled={saving || isSaved}
+          >
+            {saving ? 'Saving…' : isSaved ? 'Saved' : '+ Save'}
+          </button>
           <button className={styles.compareButton}>Compare</button>
         </Col>
       </Row>
@@ -84,7 +91,7 @@ export const AppAnalytics = () => {
 
       {/* AI GENERATED GRAPHS ROW */}
       <Row className="g-4">
-        
+
         <Col md={6} lg={4}>
           <div className={styles.graphBox}>
             <div className={styles.graphHeader}></div>
@@ -94,7 +101,7 @@ export const AppAnalytics = () => {
             </div>
           </div>
         </Col>
-        
+
         <Col md={6} lg={4}>
           <div className={styles.graphBox}>
             <div className={styles.graphHeader}></div>
@@ -104,7 +111,7 @@ export const AppAnalytics = () => {
             </div>
           </div>
         </Col>
-        
+
         <Col md={12} lg={4}>
           <div className={styles.graphBox}>
             <div className={styles.graphHeader}></div>
