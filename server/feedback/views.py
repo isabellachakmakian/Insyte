@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.core.cache import cache
 from .models import App, Review
+from datetime import datetime, timezone
 # Fetch app names
 class SearchAppView(View):
     """
@@ -51,9 +52,43 @@ class SearchAppView(View):
                 "genre": item.get("primaryGenreName"),
                 "averageRating": item.get("averageUserRating"),
                 "ratingCount": item.get("userRatingCount"),
+                "averageRatingCurrentVersion": item.get("averageUserRatingForCurrentVersion"),
+                "ratingCountCurrentVersion": item.get("userRatingCountForCurrentVersion"),
+                "releaseDate": item.get("releaseDate"),
+                "currentVersionReleaseDate": item.get("currentVersionReleaseDate"),
+                "contentAdvisoryRating": item.get("contentAdvisoryRating"),
+                "version": item.get("version"),
+                "description": item.get("description"),
             }
             for item in data.get("results", [])
         ]
+        
+        for item_data, item in zip(results, data.get("results", [])):
+            current_version_release_raw = item.get("currentVersionReleaseDate")
+            if current_version_release_raw:
+                try:
+                    release_dt = datetime.fromisoformat(current_version_release_raw.replace("Z", "+00:00"))
+                    item_data["updateVelocityDays"] = (datetime.now(timezone.utc) - release_dt).days
+                except ValueError:
+                    item_data["updateVelocityDays"] = None
+            else:
+                item_data["updateVelocityDays"] = None
+            
+            rating_count_current = item.get("userRatingCountForCurrentVersion") or 0
+            item_data["estimatedMonthlyInstalls"] = round(rating_count_current / 0.03) if rating_count_current else None
+    
+            
+            all_time = item_data.get("averageRating")
+            current = item_data.get("averageRatingCurrentVersion")
+            print(f"DEBUG: all_time={all_time}, current={current}")
+            if all_time and current:
+                drop = round(all_time-current, 2)
+                item_data["ratingDropAmount"] = drop
+                item_data["ratingDropped"] = drop > 0.5
+            else:
+                item_data["ratingDropAmount"] = None
+                item_data["ratingDropped"] = False
+            
         # Storing and returning
         payload = {"apps": results, "count": len(results)}
  
@@ -75,6 +110,7 @@ class SearchAppView(View):
             )
  
         return JsonResponse({**payload, "cached": False})
+    
 # Fetch app reviews    
 class FetchReviewsView(View):
     """
@@ -142,6 +178,7 @@ class FetchReviewsView(View):
                     continue
             if reviews:
                 break
+   
         # Computes average rating
         ratings = [int(r["rating"]) for r in reviews if r.get("rating", "").isdigit()]
         avg_rating = round(sum(ratings) / len(ratings), 2) if ratings else None
