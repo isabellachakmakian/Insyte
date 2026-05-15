@@ -1,16 +1,16 @@
 import { appsList } from "./DummyData.js";
 import styles from './ReportPage.module.css'
-import {useState, useEffect} from 'react';
-import {useParams, useLocation} from 'react-router-dom';
-import {getAppDetails, getApps} from '../../api/searchApps.js';
+import { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import { getAppDetails, getApps, saveApp } from '../../api/searchApps.js';
 
 import AppDetailBasics from "./AppDetailBasics.jsx";
 import AppAnalytics from "./AppAnalytics";
 import AppReviews from "./AppReviews";
 
-export default function ReportPage(){
-  // Get appId & name from URL params 
-    let {appId, name} = useParams();
+export default function ReportPage() {
+    // Get appId & name from URL params 
+    let { appId, name } = useParams();
 
     // Essentialy allows you to pass data from one route to another
     const location = useLocation();
@@ -23,23 +23,25 @@ export default function ReportPage(){
     // State for the reviews
     const [reviews, setReviews] = useState(null);
     const [loading, setLoading] = useState(true);
-    
-    
-    useEffect(()=>{
-        const fetchReport = async() =>{
-            try{
-                
-                let currentApp = appData; 
+    const [isSaved, setIsSaved] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+
+    useEffect(() => {
+        const fetchReport = async () => {
+            try {
+
+                let currentApp = appData;
                 // If the appData obj is Null -> State has been lost
-                if (!currentApp && name){
+                if (!currentApp && name) {
                     console.log("State lost, recovering app details via name")
-                    
+
                     // Fetch apps again based on name 
                     const apps = await getApps(name);
-                    
-                    // From app list, find the app with the correct ID
-                    currentApp = apps.find(app => String(app.id) === String(appId));
-                    
+
+                    // From app list, find the app with the correct trackId
+                    currentApp = apps.find(app => String(app.trackId) === String(appId));
+
                     // Update the appData
                     setAppData(currentApp);
                 }
@@ -48,35 +50,48 @@ export default function ReportPage(){
                 const fetchedReviews = await getAppDetails(appId);
                 setReviews(fetchedReviews);
 
-            }catch(error){
+                // Don't automatically mark the app as saved unless the user chooses it.
+                setIsSaved(false);
+
+            } catch (error) {
                 console.log(error);
-            }finally{
+            } finally {
                 setLoading(false);
             }
         };
-        if(appId){
+        if (appId) {
             fetchReport();
         }
 
-    },[appId, name]);
+    }, [appId, name]);
 
     if (loading) return <div>Loading...</div>;
 
     console.log("AppData in ReportPage:", appData);
     console.log(`Reviews in ReportPage:`, reviews);
 
+    const handleSaveApp = async () => {
+        if (!appData || saving || isSaved) return;
+        setSaving(true);
+        const result = await saveApp(appData);
+        setSaving(false);
+        if (result) {
+            setIsSaved(true);
+        }
+    };
+
     return (
         <div className={styles.reportPage}>
             <PageTitle app={appData} query={name} />
             <AppDetailBasics app={appData} />
-            <AppAnalytics />
+            <AppAnalytics onSave={handleSaveApp} isSaved={isSaved} saving={saving} />
             <AppReviews appReviews={reviews} />
         </div>
     );
 }
-    
+
 
 const PageTitle = ({ app, query }) => {
-  const titleText = app ? app.appName : query;
-  return <h2>Application Details / {titleText}</h2>;
+    const titleText = app ? app.appName : query;
+    return <h2>Application Details / {titleText}</h2>;
 };

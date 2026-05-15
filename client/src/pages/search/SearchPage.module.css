@@ -1,4 +1,4 @@
-.searchPage{
+.searchPage {
   max-width: 100%;
   max-height: fit-content;
   animation: fade-in 3s;
@@ -34,6 +34,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1.0;
   }
@@ -51,14 +52,14 @@
 /* Search bar */
 /*:global needed to override the react-bootstrap css*/
 .customSearchBar :global(.form-control) {
-  height: 4.8rem;     
-  font-size: 1rem; 
+  height: 4.8rem;
+  font-size: 1rem;
   border-radius: 2.5rem;
   border-right: none;
   transition: all 0.3s ease;
-  padding-left:1.5rem;
+  padding-left: 1.5rem;
   border-color: grey;
-  
+
 }
 
 /* Styling the focus state */
@@ -70,21 +71,22 @@
 }
 
 /* Search bar button */
-/* Need to override the react-bootsrap css for search button */ 
-.customButton{
-  width:4rem !important;
+/* Need to override the react-bootsrap css for search button */
+.customButton {
+  width: 4rem !important;
   border-left: none !important;
-  border-radius: 0 40px 40px 0!important;
+  border-radius: 0 40px 40px 0 !important;
 }
+
 .customButton:hover {
   background-color: #29292a !important;
   color: white;
 }
 
-.searchResults{
+.searchResults {
   padding: 0px 60px;
   margin-top: 2rem;
-  
+
 }
 
 .resultsColumn {
@@ -107,20 +109,20 @@
   transform: translateY(-2px);
 }
 
-.cardGroup{
+.cardGroup {
   display: flex;
   align-items: center;
-  gap:.5rem;
+  gap: .5rem;
 }
 
 .iconGroup {
-  width:48px;
-  height:48px;
-  flex-shrink:0;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
 }
 
-.appIcon{
-  display: block; 
+.appIcon {
+  display: block;
   border-radius: .55rem;
   width: 100%;
   height: 100%;
@@ -129,12 +131,12 @@
 
 .textGroup {
   display: flex;
-  flex-direction: column; 
-  padding-left:.5rem;
+  flex-direction: column;
+  padding-left: .5rem;
   justify-content: center;
 }
 
-.actionGroup{
+.actionGroup {
   margin-left: auto;
   padding-left: .3rem;
 }
@@ -147,7 +149,7 @@
 
 .companyName {
   font-size: 0.85rem;
-  color: #6c757d; 
+  color: #6c757d;
 }
 
 .plusButton {
@@ -161,7 +163,7 @@
   justify-content: center;
   color: #000000;
   font-size: 1.2rem;
-    
+
 }
 
 .plusButton:hover {
@@ -170,5 +172,13 @@
   border-color: #000000;
 }
 
+.plusButtonSaved {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
 
-
+.plusButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

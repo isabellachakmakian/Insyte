@@ -1,36 +1,32 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getTrackedApps } from '../../api/searchApps.js'
 import styles from './ListPage.module.css'
 
 const ListPage = () => {
     const navigate = useNavigate()
     const [compareMode, setCompareMode] = useState(false)
     const [selectedApps, setSelectedApps] = useState([])
+    const [apps, setApps] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
-    // Repository: git@github.com/isabellachakmakian/Insyte.git
-    const savedApps = [
-        {
-            appName: 'Spotify',
-            iconUrl: 'https://cdn-icons-png.flaticon.com/512/174/174872.png',
-            trackId: 'spotify-app-002',
-            genre: 'Music',
-            developer: 'Spotify Ltd.',
-        },
-        {
-            appName: 'Netflix',
-            iconUrl: 'https://cdn-icons-png.flaticon.com/512/732/732228.png',
-            trackId: 'netflix-app-003',
-            genre: 'Entertainment',
-            developer: 'Netflix, Inc.',
-        },
-        {
-            appName: 'Discord',
-            iconUrl: 'https://logodownload.org/wp-content/uploads/2017/11/discord-logo-1.png',
-            trackId: 'discord-app-001',
-            genre: 'Social',
-            developer: 'Discord Inc.',
-        },
-    ]
+    useEffect(() => {
+        const loadTrackedApps = async () => {
+            try {
+                setLoading(true)
+                const fetchedApps = await getTrackedApps()
+                setApps(fetchedApps)
+            } catch (err) {
+                console.error(err)
+                setError('Unable to load tracked apps from the backend.')
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        loadTrackedApps()
+    }, [])
 
     const toggleSelectApp = (trackId) => {
         setSelectedApps((prev) =>
@@ -46,15 +42,9 @@ const ListPage = () => {
             return
         }
 
-        navigate(`/report/${app.trackId}/${app.appName}`)
-    }
-
-    const handleCompareButton = (e, app) => {
-        e.stopPropagation()
-        setCompareMode(true)
-        setSelectedApps((prev) =>
-            prev.includes(app.trackId) ? prev : [...prev, app.trackId]
-        )
+        navigate(`/report/${app.trackId}/${encodeURIComponent(app.appName)}`, {
+            state: { appData: app },
+        })
     }
 
     const handleExitCompare = () => {
@@ -71,7 +61,8 @@ const ListPage = () => {
                 </div>
 
                 <button
-                    className={`${styles.topCompareButton} ${compareMode ? styles.topCompareButtonActive : ''}`}
+                    className={`${styles.topCompareButton} ${compareMode ? styles.topCompareButtonActive : ''
+                        }`}
                     onClick={() => {
                         if (compareMode) {
                             handleExitCompare()
@@ -92,45 +83,52 @@ const ListPage = () => {
                 </div>
             )}
 
-            <div className={styles.appsGrid}>
-                {savedApps.map((app) => {
-                    const isSelected = selectedApps.includes(app.trackId)
-                    return (
-                        <div
-                            key={app.trackId}
-                            className={`${styles.appCard} ${isSelected ? styles.selectedCard : ''}`}
-                            onClick={() => {
-                                if (compareMode) {
-                                    toggleSelectApp(app.trackId)
-                                } else {
-                                    handleCardClick(app)
-                                }
-                            }}
-                        >
+            {loading ? (
+                <div className={styles.compareNotice}>Loading tracked apps...</div>
+            ) : error ? (
+                <div className={styles.compareNotice}>{error}</div>
+            ) : apps.length === 0 ? (
+                <div className={styles.compareNotice}>
+                    No tracked apps found. Search for apps on the home page to populate your list.
+                </div>
+            ) : (
+                <div className={styles.appsGrid}>
+                    {apps.map((app) => {
+                        const isSelected = selectedApps.includes(app.trackId)
+                        return (
                             <div
-                                className={styles.appIcon}
-                                style={{
-                                    backgroundImage: `url(${app.iconUrl})`,
-                                }}
-                                aria-label={`${app.appName} icon`}
-                            />
+                                key={app.trackId}
+                                className={`${styles.appCard} ${isSelected ? styles.selectedCard : ''
+                                    }`}
+                                onClick={() => handleCardClick(app)}
+                            >
+                                <div
+                                    className={styles.appIcon}
+                                    style={{
+                                        backgroundImage: `url(${app.iconUrl})`,
+                                    }}
+                                    aria-label={`${app.appName} icon`}
+                                />
 
-                            <div className={styles.appInfo}>
-                                <h2 className={styles.appName}>{app.appName}</h2>
-                                <div className={styles.appMeta}>
-                                    <span className={styles.developer}>{app.developer}</span>
-                                    <span className={styles.metaSeparator}>•</span>
-                                    <span className={styles.genreTag}>{app.genre}</span>
+                                <div className={styles.appInfo}>
+                                    <h2 className={styles.appName}>{app.appName}</h2>
+                                    <div className={styles.appMeta}>
+                                        <span className={styles.developer}>
+                                            {app.developerName || 'Unknown Developer'}
+                                        </span>
+                                        <span className={styles.metaSeparator}>•</span>
+                                        <span className={styles.genreTag}>{app.genre || 'Unknown'}</span>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {compareMode && isSelected && (
-                                <div className={styles.selectedBadge}>✓ Selected</div>
-                            )}
-                        </div>
-                    )
-                })}
-            </div>
+                                {compareMode && isSelected && (
+                                    <div className={styles.selectedBadge}>✓ Selected</div>
+                                )}
+                            </div>
+                        )
+                    })}
+                </div>
+            )}
         </div>
     )
 }
