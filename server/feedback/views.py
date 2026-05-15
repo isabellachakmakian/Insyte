@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.views import View
 from django.core.cache import cache
 from .models import App, Review
+import os
+import json
 from datetime import datetime, timezone
 # Fetch app names
 class SearchAppView(View):
@@ -211,4 +213,172 @@ class FetchReviewsView(View):
         except App.DoesNotExist:
             pass
 
+        return JsonResponse({**payload, "cached": False})
+    
+class AnalyzeReviewsView(View):
+    """
+        GET /api/analyze/?trackId=<id>
+        1. Fetches reviews from iTunes RSS feed
+        2. Filters to 50 most recent with content > 100 characters
+        3. Takes 20 of those and sends to Groq for AI analysis
+        4. Returns structured insights (label, verbatim_quote, source_id, sentiment)
+        """
+    CACHE_TIMEOUT = 60 * 60  # 1 hour
+    HEADERS = {
+        "User-Agent": (
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Safari/537.36"
+        )
+    }
+ 
+    def get(self, request):
+        track_id = request.GET.get("trackId", "").strip()
+        if not track_id:
+            return JsonResponse({"error": "Missing 'trackId' query parameter"}, status=400)
+ 
+        # Check cache first
+        cache_key = f"analyze_{track_id}"
+        cached = cache.get(cache_key)
+        if cached:
+            return JsonResponse({**cached, "cached": True})
+ 
+        # Fetch reviews from iTunes 
+        sort_orders = ["mostrecent", "mosthelpful"]
+        all_reviews = []
+ 
+        for sort in sort_orders:
+            for pg in range(1, 4):
+                url = (
+                    f"https://itunes.apple.com/rss/customerreviews/"
+                    f"page={pg}/id={track_id}/sortby={sort}/json"
+                )
+                try:
+                    response = requests.get(url, headers=self.HEADERS, timeout=10)
+                    response.raise_for_status()
+                    data = response.json()
+                    entries = data.get("feed", {}).get("entry", [])
+                    review_entries = entries[1:] if len(entries) > 1 else []
+                    if review_entries:
+                        all_reviews = [
+                            {
+                                "id": entry.get("id", {}).get("label"),
+                                "title": entry.get("title", {}).get("label"),
+                                "content": entry.get("content", {}).get("label"),
+                                "rating": entry.get("im:rating", {}).get("label"),
+                                "author": entry.get("author", {}).get("name", {}).get("label"),
+                                "date": entry.get("updated", {}).get("label"),
+                                "version": entry.get("im:version", {}).get("label"),
+                            }
+                            for entry in review_entries
+                        ]
+                        break
+                except requests.RequestException:
+                    continue
+            if all_reviews:
+                break
+ 
+        if not all_reviews:
+            return JsonResponse({"error": "No reviews found for this app"}, status=404)
+ 
+        # Filter to 50 most recent with content > 100 characters 
+        filtered_reviews = [
+            r for r in all_reviews
+            if r.get("content") and len(r["content"]) > 100
+        ][:50]
+ 
+        if not filtered_reviews:
+            return JsonResponse({"error": "No reviews with sufficient content found"}, status=404)
+ 
+        # Take 20 reviews and format for Groq prompt 
+        reviews_for_prompt = filtered_reviews[:20]
+ 
+        prompt_input = [
+            {
+                "id": r["id"],
+                "review": r["content"]
+            }
+            for r in reviews_for_prompt
+        ]
+ 
+        # Send to Groq 
+        groq_api_key = os.environ.get("GROQ_API_KEY")
+        if not groq_api_key:
+            return JsonResponse({"error": "GROQ_API_KEY not set"}, status=500)
+ 
+        system_prompt = """You are an expert Technical VC Analyst evaluating mobile applications. 
+Your task is to analyze user reviews from the iTunes API and extract specific technical insights (strengths and weaknesses) regarding the app's performance, UX, and architecture.
+ 
+### INSTRUCTIONS:
+1. Each user message will be a JSON array of app reviews. 
+2. You must extract key technical insights from these reviews. Do not force an arbitrary number of insights; extract as many or as few as are genuinely useful for a technical due-diligence report.
+3. Order the extracted insights from MOST critical/useful to LEAST useful.
+4. CRITICAL RULE: The `verbatim_quote` field MUST be an exact, word-for-word extraction from the original review text. Do not summarize, paraphrase, or fix grammar. If you cannot extract a direct quote, do not create the insight.
+5. Return ONLY valid JSON. No explanation, no markdown, no code blocks.
+ 
+### EXAMPLE OUTPUT FORMAT:
+{
+  "insights": [
+    {
+      "label": "LATENCY",
+      "verbatim_quote": "the face ID login takes literally 10 seconds to load every single time.",
+      "source_id": "r101",
+      "sentiment": "negative"
+    },
+    {
+      "label": "CRASH",
+      "verbatim_quote": "the transaction history page crashes when I scroll too fast.",
+      "source_id": "r102",
+      "sentiment": "negative"
+    },
+    {
+      "label": "AESTHETIC",
+      "verbatim_quote": "love the new dark mode aesthetic, it feels very premium.",
+      "source_id": "r102",
+      "sentiment": "positive"
+    }
+  ]
+}"""
+ 
+        try:
+            groq_response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {groq_api_key}",
+                    "Content-Type": "application/json",
+                },
+                json={
+                    "model": "llama-3.1-8b-instant",
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": json.dumps(prompt_input)}
+                    ],
+                    "temperature": 0.3,
+                },
+                timeout=30,
+            )
+            groq_response.raise_for_status()
+            groq_data = groq_response.json()
+            raw_content = groq_data["choices"][0]["message"]["content"]
+ 
+            # Parse the JSON response from Groq
+            insights = json.loads(raw_content)
+ 
+        except requests.RequestException as e:
+            try:
+                error_detail = e.response.json()
+            except Exception:
+                error_detail = str(e)
+            return JsonResponse({"error": f"Groq API error", "detail": error_detail}, status=502)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Groq returned invalid JSON", "raw": raw_content}, status=500)
+ 
+        payload = {
+            "trackId": track_id,
+            "reviewsAnalyzed": len(reviews_for_prompt),
+            "insights": insights.get("insights", []),
+        }
+ 
+        cache.set(cache_key, payload, self.CACHE_TIMEOUT)
+ 
         return JsonResponse({**payload, "cached": False})
