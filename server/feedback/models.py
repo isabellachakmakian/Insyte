@@ -9,6 +9,7 @@ class App(models.Model):
     genre = models.CharField(max_length=100, blank=True, null=True)
     average_rating = models.FloatField(blank=True, null=True)
     rating_count = models.IntegerField(blank=True, null=True)
+    tracked = models.BooleanField(default=False)
     last_fetched = models.DateTimeField(auto_now=True)
     
     def __str__(self):

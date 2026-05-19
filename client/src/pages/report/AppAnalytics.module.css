@@ -26,11 +26,11 @@
   margin-left: 10px;
   margin-right: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background: linear-gradient( /* COMPARE BUTTON COLOR */  
-    135deg,
-    rgba(135, 199, 255) 25%,
-    rgba(101, 137, 254) 100%
-  );
+  background: linear-gradient(
+      /* COMPARE BUTTON COLOR */
+      135deg,
+      rgba(135, 199, 255) 25%,
+      rgba(101, 137, 254) 100%);
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -39,6 +39,35 @@
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.saveButton {
+  width: 120px;
+  height: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.saveButtonActive {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.actionButtonGroup {
+  display: flex;
   align-items: center;
 }
 
@@ -76,7 +105,7 @@
 }
 
 .tagWrapper {
-  width: 70px; 
+  width: 70px;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
@@ -103,11 +132,9 @@
 
 /* EFFICIENCY INSIGHT COLORS */
 .positiveHeader {
-  background: linear-gradient(
-    135deg,
-    rgba(30, 215, 156, 0.8) 0%,
-    rgb(205, 249, 167) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(30, 215, 156, 0.8) 0%,
+      rgb(205, 249, 167) 100%);
   height: 4px;
 }
 
@@ -119,11 +146,9 @@
 
 /* IMPROVEMENT INSIGHT COLORS */
 .negativeHeader {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 88, 88, 0.8) 0%,
-    rgba(255, 200, 200) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 88, 88, 0.8) 0%,
+      rgba(255, 200, 200) 100%);
   height: 4px;
 }
 
@@ -162,11 +187,9 @@
 }
 
 .graphHeader {
-  background: linear-gradient(
-    135deg,
-    rgb(101, 137, 254, 0.8) 25%,
-    rgb(135, 199, 255, 0.8) 100%
-  );
+  background: linear-gradient(135deg,
+      rgb(101, 137, 254, 0.8) 25%,
+      rgb(135, 199, 255, 0.8) 100%);
   height: 4px;
 }
 

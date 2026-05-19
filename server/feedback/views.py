@@ -1,6 +1,9 @@
+import json
 import requests
 from django.http import JsonResponse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from django.core.cache import cache
 from .models import App, Review
 import os
@@ -96,23 +99,70 @@ class SearchAppView(View):
  
         # Store in cache
         cache.set(cache_key, payload, self.CACHE_TIMEOUT)
-        
-        # Save app to database
-        for item in results:
-            App.objects.update_or_create(
-                track_id=item["trackId"],
-                defaults={
-                    "app_name": item["appName"],
-                    "developer_name": item["developerName"],
-                    "icon_url": item["iconUrl"],
-                    "genre": item["genre"],
-                    "average_rating": item["averageRating"],
-                    "rating_count": item["ratingCount"],
-                }
-            )
  
         return JsonResponse({**payload, "cached": False})
-    
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AppsListView(View):
+    """
+    GET /api/apps/  returns saved tracked apps.
+    POST /api/apps/ saves an app to the tracked list.
+    """
+
+    def get(self, request):
+        saved_apps = App.objects.filter(tracked=True).order_by('app_name')
+        apps = [
+            {
+                "appName": item.app_name,
+                "trackId": item.track_id,
+                "developerName": item.developer_name,
+                "iconUrl": item.icon_url,
+                "genre": item.genre,
+                "averageRating": item.average_rating,
+                "ratingCount": item.rating_count,
+            }
+            for item in saved_apps
+        ]
+        return JsonResponse({"apps": apps, "count": len(apps)})
+
+    def post(self, request):
+        try:
+            payload = json.loads(request.body.decode('utf-8') or '{}')
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON payload"}, status=400)
+
+        track_id = payload.get("trackId")
+        app_name = payload.get("appName")
+        if not track_id or not app_name:
+            return JsonResponse({"error": "trackId and appName are required"}, status=400)
+
+        app, created = App.objects.update_or_create(
+            track_id=str(track_id),
+            defaults={
+                "app_name": app_name,
+                "developer_name": payload.get("developerName"),
+                "icon_url": payload.get("iconUrl"),
+                "genre": payload.get("genre"),
+                "average_rating": payload.get("averageRating"),
+                "rating_count": payload.get("ratingCount"),
+                "tracked": True,
+            },
+        )
+
+        return JsonResponse({
+            "saved": True,
+            "created": created,
+            "app": {
+                "appName": app.app_name,
+                "trackId": app.track_id,
+                "developerName": app.developer_name,
+                "iconUrl": app.icon_url,
+                "genre": app.genre,
+                "averageRating": app.average_rating,
+                "ratingCount": app.rating_count,
+            },
+        })
+
 # Fetch app reviews    
 class FetchReviewsView(View):
     """
